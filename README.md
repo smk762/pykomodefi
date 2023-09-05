@@ -1,7 +1,7 @@
 
 ## KomoDeFi Framework wrapper for Python
 
-**pykomodifi** is a simple wrapper around [Komodo Platform's](https://komodoplatform.com/en/) DeFi API.
+**pykomodifi** is a simple wrapper around [Komodo Platform's](https://komodoplatform.com/en/) [DeFi Framework](https://github.com/KomodoPlatform/komodo-defi-framework).
 
 
 **Basic usage:**
