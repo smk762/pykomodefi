@@ -4,7 +4,14 @@
 **pykomodifi** is a simple wrapper around [Komodo Platform's](https://komodoplatform.com/en/) [DeFi Framework](https://github.com/KomodoPlatform/komodo-defi-framework).
 
 
-**Basic usage:**
+### Installation
+
+`pip install pykomodefi`
+
+
+### Usage
+
+**Configuration:**
 ```
    >>> import komodefi
    >>> dexapi = komodefi.KomoDeFi_API(config="path/to/MM2.json")
