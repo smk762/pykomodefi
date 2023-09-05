@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "pykomodefi"
-version = "0.1.0"
+version = "0.2.1"
 description = "A wrapper for the Komodo DeFi Framework API"
 authors = ["smk <smk@komodoplatform.com>"]
 readme = "README.md"
 license = "MIT"
-homepage = "https://github.com/smk762/pykomodo"
-repository = "https://github.com/smk762/pykomodo"
-documentation = "https://github.com/smk762/pykomodo"
+homepage = "https://github.com/smk762/pykomodefi"
+repository = "https://github.com/smk762/pykomodefi"
+documentation = "https://github.com/smk762/pykomodefi"
 keywords = ["dex", "crypto", "komodo", "defi", "api", "trading", "atomic swaps"]
 classifiers = [
     "Environment :: Console",
