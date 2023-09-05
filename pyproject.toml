@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "pykomodefi"
+version = "0.1.0"
+description = "A wrapper for the Komodo DeFi Framework API"
+authors = ["smk <smk@komodoplatform.com>"]
+readme = "README.md"
+license = "MIT"
+homepage = "https://github.com/smk762/pykomodo"
+repository = "https://github.com/smk762/pykomodo"
+documentation = "https://github.com/smk762/pykomodo"
+keywords = ["dex", "crypto", "komodo", "defi", "api", "trading", "atomic swaps"]
+classifiers = [
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3.8",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Libraries :: Python Modules"
+]
+include = [
+    "LICENSE",
+]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+requests = "^2.31.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
