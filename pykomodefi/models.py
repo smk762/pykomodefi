@@ -2,13 +2,12 @@
 import os
 import json
 import requests
-from .logger import logger
 
 
 class KomoDeFi_API():
     def __init__(self, config: str, protocol: str = "http"):
         if not os.path.isfile(config):
-            logger.error(f"Komodefi SDK config not found at {config}!")
+            raise FileNotFoundError(f"Komodefi SDK config not found at {config}!")
         else:            
             with open(config, "r") as f:
                 conf = json.load(f)
@@ -46,28 +45,22 @@ class KomoDeFi_API():
                 "method": method
             })
             r = requests.post(self.mm2_ip, json.dumps(body))
-            if 'error' in r.json():
-                logger.error(f"Error in KomoDeFi_API.rpc: {r.json()['error']}")
             return r
         except ConnectionRefusedError:
-            logger.error(f"Komodefi SDK is not reponding at {self.mm2_ip}! Download it from https://github.com/KomodoPlatform/atomicDEX-API/releases")
+            raise ConnectionRefusedError(f"Komodefi SDK is not reponding at {self.mm2_ip}! Download it from https://github.com/KomodoPlatform/atomicDEX-API/releases")
         except Exception as e:
-            logger.error(f"Exception in KomoDeFi_API.rpc: {e}")
-            return None
+            body["userpass"] = "*********"
+            print(f"Rpc request failed: {body}")
+            print(f"Unhandled exception in KomoDeFi_API.rpc: {e}")
+            return {"error": str(e)}
 
     @property
     def version(self):
-        try:
-            return self.rpc("version").json()["result"]
-        except ConnectionRefusedError:
-            return "Error"
+        return self.rpc("version").json()["result"]
 
     @property
     def pubkey(self):
-        try:
-            return self.rpc("get_public_key", v2=True).json()["result"]
-        except ConnectionRefusedError:
-            return "Error"
+        return self.rpc("get_public_key", v2=True).json()["result"]
 
     @property
     def help(self):
