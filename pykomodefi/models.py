@@ -60,7 +60,31 @@ class KomoDeFi_API():
 
     @property
     def pubkey(self):
-        return self.rpc("get_public_key", v2=True).json()["result"]
+        return self.rpc("get_public_key", v2=True).json()["result"]["public_key"]
+
+    @property
+    def pubkey_hash(self):
+        return self.rpc("get_public_key_hash", v2=True).json()["result"]["public_key_hash"]
+
+    @property
+    def peers_info(self):
+        return self.rpc("get_peers_info").json()["result"]
+
+    @property
+    def peer_id(self):
+        return self.rpc("get_my_peer_id").json()["result"]
+    
+    @property
+    def orders(self):
+        return self.rpc("my_orders").json()["result"]
+
+    @property
+    def active_swaps(self):
+        return self.rpc("active_swaps").json()["result"]
+
+    @property
+    def enabled_coins(self):
+        return self.rpc("get_enabled_coins").json()["result"]
 
     @property
     def help(self):
