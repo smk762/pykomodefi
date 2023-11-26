@@ -13,19 +13,19 @@ class KomoDeFi_API():
                 conf = json.load(f)
             self.userpass = conf["rpc_password"]
 
-            ip = '127.0.0.1'
+            self.ip = '127.0.0.1'
             if "rpc_ip" in conf:
-                ip = conf["rpc_ip"]
+                self.ip = conf["rpc_ip"]
 
-            port = 7783
+            self.port = 7783
             if "rpcport" in conf:
-                port = conf["rpcport"]
+                self.port = conf["rpcport"]
 
-            netid = 7777
+            self.netid = 7777
             if "netid" in conf:
                 self.netid = conf["netid"]
 
-            self.mm2_ip = f"{protocol}://{ip}:{port}"
+            self.mm2_ip = f"{protocol}://{self.ip}:{self.port}"
 
 
     def rpc(self, method: str, params: dict = dict(), v2: bool = False):
@@ -80,7 +80,7 @@ class KomoDeFi_API():
 
     @property
     def active_swaps(self):
-        return self.rpc("active_swaps").json()["result"]
+        return self.rpc("active_swaps").json()
 
     @property
     def enabled_coins(self):

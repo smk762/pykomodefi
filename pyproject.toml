@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pykomodefi"
-version = "0.2.2"
+version = "0.2.3"
 description = "A wrapper for the Komodo DeFi Framework API"
 authors = ["smk <smk@komodoplatform.com>"]
 readme = "README.md"

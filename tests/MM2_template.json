@@ -1,0 +1,17 @@
+{
+    "gui": "pykomodefi_testing",
+    "use_trading_proto_v2": true,
+    "netid": 8762,
+    "rpc_password": "04ghf9jd0E!1gR-6Fce0",
+    "rpc_ip": "127.0.0.1",
+    "rpcport": 7783,
+    "rpc_local_only": true,
+	"event_stream_configuration": {
+		"access_control_allow_origin": "*",
+		"active_events": {
+			"NETWORK": { "stream_interval_seconds": 0.5 }
+		}
+	},
+    "passphrase": "steel orange father office bring addict sniff young hair ice cream forget"
+}
+

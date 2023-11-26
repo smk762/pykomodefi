@@ -13,8 +13,8 @@
 
 **Configuration:**
 ```
-   >>> import komodefi
-   >>> dexapi = komodefi.KomoDeFi_API(config="path/to/MM2.json")
+   >>> import pykomodefi
+   >>> dexapi = pykomodefi.KomoDeFi_API(config="path/to/MM2.json")
 ```
 
 **Simple RPC call:**
