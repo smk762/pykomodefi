@@ -4,88 +4,138 @@ import json
 import requests
 
 
-class KomoDeFi_API():
-    def __init__(self, config: str, protocol: str = "http"):
-        if not os.path.isfile(config):
-            raise FileNotFoundError(f"Komodefi SDK config not found at {config}!")
-        else:            
-            with open(config, "r") as f:
-                conf = json.load(f)
-            self.userpass = conf["rpc_password"]
-
-            self.ip = '127.0.0.1'
-            if "rpc_ip" in conf:
-                self.ip = conf["rpc_ip"]
-
-            self.port = 7783
-            if "rpcport" in conf:
-                self.port = conf["rpcport"]
-
-            self.netid = 7777
-            if "netid" in conf:
-                self.netid = conf["netid"]
-
-            self.mm2_ip = f"{protocol}://{self.ip}:{self.port}"
-
+class KomoDeFi_API:
+    def __init__(self, config: str = "", protocol: str = "http"):
+        self.protocol = protocol
+        self.set_config(config)
 
     def rpc(self, method: str, params: dict = dict(), v2: bool = False):
         try:
             if v2:
-                body = {
-                    "mmrpc": "2.0",
-                    "params": params
-                }
+                body = {"mmrpc": "2.0", "params": params}
             elif params:
                 body = params
             else:
                 body = dict()
 
-            body.update({
-                "userpass": self.userpass,
-                "method": method
-            })
-            r = requests.post(self.mm2_ip, json.dumps(body))
+            body.update({"userpass": self.userpass, "method": method})
+            r = requests.post(self.mm2_ip, json.dumps(body)).json()
             return r
         except ConnectionRefusedError:
-            raise ConnectionRefusedError(f"Komodefi SDK is not reponding at {self.mm2_ip}! Download it from https://github.com/KomodoPlatform/atomicDEX-API/releases")
+            raise ConnectionRefusedError(f"Komodefi SDK is not reponding at {self.mm2_ip}!")
         except Exception as e:
             body["userpass"] = "*********"
-            print(f"Rpc request failed: {body}")
-            print(f"Unhandled exception in KomoDeFi_API.rpc: {e}")
-            return {"error": str(e)}
+            return {
+                "error": f"Unhandled exception in KomoDeFi_API.rpc: {e}",
+                "request": body,
+            }
+
+    def set_config(self, config: str):
+        if config == "":
+            config = f"{os.getcwd()}/MM2.json"
+        if not os.path.exists(config):
+            raise FileNotFoundError(f"Komodefi SDK config not found at {config}!")
+        else:
+            self.config = config
+            with open(self.config, "r") as f:
+                self.mm2_json = json.load(f)
+
+    @property
+    def db_dir(self):
+        return (
+            self.mm2_json["dbdir"]
+            if "dbdir" in self.mm2_json
+            else f"{os.path.dirname(self.config)}/DB"
+        )
+
+    @property
+    def netid(self):
+        return self.mm2_json["netid"] if "netid" in self.mm2_json else 8762
+
+    @property
+    def account_id(self):
+        return (
+            self.mm2_json["hd_account_id"] if "hd_account_id" in self.mm2_json else None
+        )
+
+    @property
+    def userpass(self):
+        return (
+            self.mm2_json["rpc_password"] if "rpc_password" in self.mm2_json else None
+        )
+
+    @property
+    def rpcip(self):
+        return self.mm2_json["rpcip"] if "rpcip" in self.mm2_json else "127.0.0.1"
+
+    @property
+    def rpcport(self):
+        return self.mm2_json["rpcport"] if "rpcport" in self.mm2_json else 7783
 
     @property
     def version(self):
-        return self.rpc("version").json()["result"]
+        r = self.rpc("version")
+        if "result" in r:
+            return r["result"]
+        return r
 
     @property
     def pubkey(self):
-        return self.rpc("get_public_key", v2=True).json()["result"]["public_key"]
+        r = self.rpc("get_public_key", v2=True)
+        if "result" in r:
+            if "public_key" in r["result"]:
+                return r["result"]["public_key"]
+        return r
 
     @property
     def pubkey_hash(self):
-        return self.rpc("get_public_key_hash", v2=True).json()["result"]["public_key_hash"]
+        r = self.rpc("get_public_key_hash", v2=True)
+        if "result" in r:
+            if "public_key_hash" in r["result"]:
+                return r["result"]["public_key_hash"]
+        return r
+
+    @property
+    def mm2_ip(self):
+        return f"{self.protocol}://{self.rpcip}:{self.rpcport}"
 
     @property
     def peers_info(self):
-        return self.rpc("get_peers_info").json()["result"]
+        r = self.rpc("get_peers_info")
+        if "result" in r:
+            return r["result"]
+        return r
 
     @property
     def peer_id(self):
-        return self.rpc("get_my_peer_id").json()["result"]
-    
+        r = self.rpc("get_my_peer_id")
+        if "result" in r:
+            return r["result"]
+        return r
+
     @property
     def orders(self):
-        return self.rpc("my_orders").json()["result"]
+        r = self.rpc("my_orders")
+        if "result" in r:
+            return r["result"]
+        return r
 
     @property
     def active_swaps(self):
-        return self.rpc("active_swaps").json()
+        r = self.rpc("active_swaps")
+        if "result" in r:
+            return r["result"]
+        return r
 
     @property
     def enabled_coins(self):
-        return self.rpc("get_enabled_coins").json()["result"]
+        r = self.rpc("get_enabled_coins")
+        if "result" in r:
+            return r["result"]
+        return r
 
     @property
     def help(self):
-        print("Please refer to https://github.com/smk762/pykomodo for docs and examples using pykomodefi.")
+        print(
+            "Please refer to https://github.com/smk762/pykomodefi for documentation."
+        )

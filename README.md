@@ -12,10 +12,22 @@
 ### Usage
 
 **Configuration:**
+
+The configuration file can be passed as a parameter to the `KomoDeFi_API` class constructor:
+
 ```
    >>> import pykomodefi
-   >>> dexapi = pykomodefi.KomoDeFi_API(config="path/to/MM2.json")
+   >>> dexapi = pykomodefi.KomoDeFi_API(config="/path/to/MM2.json")
 ```
+If not set, the default configuration file path is `MM2.json` in the current folder.
+It can be set to a different file later:
+
+```
+   >>> import pykomodefi
+   >>> dexapi = pykomodefi.KomoDeFi_API()
+   >>> dexapi.set_config = "/path/to/MM2.json"
+```
+
 
 **Simple RPC call:**
 ```
@@ -135,3 +147,14 @@ The following methods are available as properties of the `KomoDeFi_API` class. T
 ```
 
 For documentation about available methods and parameters, refer to: <https://developers.komodoplatform.com/basic-docs/atomicdex/introduction-to-atomicdex.html>
+
+
+### Building locally
+
+- Run `poetry build`
+- Run `pipx install --spec $(pwd)/dist/pykomodefi-0.2.4.tar.gz pykomodefi --include-deps --force` (change version number accordingly)
+
+### Running tests
+
+- Set MM2.json path for tests in `/test/.env`
+- Run `poetry run pytest -vv`
