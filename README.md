@@ -31,14 +31,8 @@ It can be set to a different file later:
 
 **Simple RPC call:**
 ```
-   >>> r = dexapi.rpc("get_enabled_coins")
-   >>> r
-   <Response [200]>
-
-   >>> r.status_code
-   200
-
-   >>> r.json()
+   >>> resp = dexapi.rpc("get_enabled_coins")
+   >>> resp
    {
       'result': [
          {
@@ -56,8 +50,8 @@ It can be set to a different file later:
 **RPC call with parameters:**
 ```
    >>> params = {"coin": "KMD"}
-   >>> r = dexapi.rpc("my_balance", params)
-   >>> r.json()
+   >>> resp = dexapi.rpc("my_balance", params)
+   >>> resp
    {
       'coin': 'KMD',
       'balance': '20',
@@ -68,8 +62,8 @@ It can be set to a different file later:
 
 **v2 RPC call:**
 ```
-   >>> r = dexapi.rpc("get_public_key", v2=True)
-   >>> r.json()
+   >>> resp = dexapi.rpc("get_public_key", v2=True)
+   >>> resp
    {
       'mmrpc': '2.0',
       'result': {
@@ -148,6 +142,17 @@ The following methods are available as properties of the `KomoDeFi_API` class. T
 
 For documentation about available methods and parameters, refer to: <https://developers.komodoplatform.com/basic-docs/atomicdex/introduction-to-atomicdex.html>
 
+Some configuration params from within `MM2.json` are also available as properties:
+```
+>>> dexapi.netid
+8762
+>>> dexapi.rpcip
+127.0.0.1
+>>> dexapi.rpcport
+7783
+>>> dexapi.db_dir
+/path/to/DB
+```
 
 ### Building locally
 
