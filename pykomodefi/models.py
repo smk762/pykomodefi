@@ -22,7 +22,9 @@ class KomoDeFi_API:
             r = requests.post(self.mm2_ip, json.dumps(body)).json()
             return r
         except ConnectionRefusedError:
-            raise ConnectionRefusedError(f"Komodefi SDK is not reponding at {self.mm2_ip}!")
+            raise ConnectionRefusedError(
+                f"Komodefi SDK is not reponding at {self.mm2_ip}!"
+            )
         except Exception as e:
             body["userpass"] = "*********"
             return {
@@ -32,7 +34,14 @@ class KomoDeFi_API:
 
     def set_config(self, config: str):
         if config == "":
-            config = f"{os.getcwd()}/MM2.json"
+            if os.path.exists(f"{os.getcwd()}/MM2.json"):
+                config = f"{os.getcwd()}/MM2.json"
+            elif os.path.exists(f"{os.path.expanduser('~')}/.kdf/MM2.json"):
+                config = f"{os.path.expanduser('~')}/.kdf/MM2.json"
+            else:
+                raise FileNotFoundError(
+                    "Komodefi SDK config not found in current folder or home directory!"
+                )
         if not os.path.exists(config):
             raise FileNotFoundError(f"Komodefi SDK config not found at {config}!")
         else:
@@ -101,7 +110,7 @@ class KomoDeFi_API:
 
     @property
     def peers_info(self):
-        r = self.rpc("get_peers_info")
+        r = self.rpc("get_directly_connected_peers")
         if "result" in r:
             return r["result"]
         return r
@@ -136,6 +145,4 @@ class KomoDeFi_API:
 
     @property
     def help(self):
-        print(
-            "Please refer to https://github.com/smk762/pykomodefi for documentation."
-        )
+        print("Please refer to https://github.com/smk762/pykomodefi for documentation.")

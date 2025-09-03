@@ -6,6 +6,9 @@
     "rpc_ip": "127.0.0.1",
     "rpcport": 7783,
     "rpc_local_only": true,
+    "i_am_seed": false,
+    "is_bootstrap_node": false,
+    "disable_p2p": false,
 	"event_stream_configuration": {
 		"access_control_allow_origin": "*",
 		"active_events": {

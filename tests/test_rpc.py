@@ -3,11 +3,11 @@ import os
 import pykomodefi as pkd
 from dotenv import load_dotenv
 
-load_dotenv()
-
 SCRIPT_PATH = os.path.abspath(os.path.dirname(__file__))
+load_dotenv(f"{SCRIPT_PATH}/.env")
+
 MM2_PATH = os.path.dirname(SCRIPT_PATH)
-MM2_JSON_PATH = os.getenv("MM2_JSON_PATH", f"{MM2_PATH}/MM2.json")
+MM2_JSON_PATH = os.getenv("MM2_JSON_PATH")
 
 print(f"Using {MM2_JSON_PATH}...")
 dexapi = pkd.KomoDeFi_API(config=MM2_JSON_PATH)

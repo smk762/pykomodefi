@@ -19,7 +19,7 @@ The configuration file can be passed as a parameter to the `KomoDeFi_API` class 
    >>> import pykomodefi
    >>> dexapi = pykomodefi.KomoDeFi_API(config="/path/to/MM2.json")
 ```
-If not set, the default configuration file path is `MM2.json` in the current folder.
+If not set, the default configuration file path is `MM2.json` in the current folder, or `~/.kdf/MM2.json`.
 It can be set to a different file later:
 
 ```
@@ -157,9 +157,26 @@ Some configuration params from within `MM2.json` are also available as propertie
 ### Building locally
 
 - Run `poetry build`
-- Run `pipx install --spec $(pwd)/dist/pykomodefi-0.2.4.tar.gz pykomodefi --include-deps --force` (change version number accordingly)
+- Run `pipx install --spec $(pwd)/dist/pykomodefi-0.2.5.tar.gz pykomodefi --include-deps --force` (change version number accordingly)
 
 ### Running tests
 
-- Set MM2.json path for tests in `/test/.env`
-- Run `poetry run pytest -vv`
+**Prerequisites:**
+- Install dependencies: `poetry install`
+- Set up test configuration by either:
+  - Creating `tests/.env` file with: `MM2_JSON_PATH=tests/MM2.json`
+  - OR copying test config to project root: `cp tests/MM2.json .`
+
+**Run tests:**
+```bash
+# Run all tests with coverage
+poetry run pytest tests/ -v
+
+# Run tests with verbose output
+poetry run pytest tests/ -vv
+
+# Run with coverage report
+poetry run pytest tests/ --cov=pykomodefi --cov-report=html
+```
+
+**Note:** Tests will show connection errors if the KomoDeFi Framework (MM2) is not running. This is expected behavior - the package correctly handles and reports connection failures. To run tests against a live MM2 instance, ensure MM2 is running on `127.0.0.1:7783` before running the tests.

@@ -1,6 +1,6 @@
-#  _   __                     ______    ______ _ 
+#  _   __                     ______    ______ _
 # | | / /                     |  _  \   |  ___(_)
-# | |/ /  ___  _ __ ___   ___ | | | |___| |_   _ 
+# | |/ /  ___  _ __ ___   ___ | | | |___| |_   _
 # |    \ / _ \| '_ ` _ \ / _ \| | | / _ \  _| | |
 # | |\  \ (_) | | | | | | (_) | |/ /  __/ |   | |
 # \_| \_/\___/|_| |_| |_|\___/|___/ \___\_|   |_|
@@ -31,7 +31,7 @@ Simple RPC call:
    >>> r.json()
    {'result': [{'ticker': 'KMD', 'address': 'RMC1cWXngQf2117apEKoLh3x27NoG88yzd'}, {'ticker': 'LTC', 'address': 'LQyzwFtf8HU7VYQMhop5bv857uMao4jnKX'}]}
 
-   
+
 RPC call with parameters:
 
    >>> params = {"coin": "KMD"}
